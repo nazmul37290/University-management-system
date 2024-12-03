@@ -1,27 +1,18 @@
-import { NextFunction, Request, Response } from 'express';
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { UserServices } from './user.services';
-// comment out
-const createStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const { password, student: studentData } = req.body;
+import catchAsync from '../../utils/catchAsync';
 
-    const result = await UserServices.createStudentIntoDB(
-      password,
-      studentData,
-    );
-    res.status(200).json({
-      success: true,
-      message: 'user created successfully',
-      data: result,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+const createStudent = catchAsync(async (req, res, next) => {
+  const { password, student: studentData } = req.body;
+  const result = await UserServices.createStudentIntoDB(password, studentData);
+  res.status(200).json({
+    success: true,
+    message: 'user created successfully',
+    data: result,
+  });
+});
 
 export const UserController = {
   createStudent,

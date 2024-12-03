@@ -3,8 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import cors from 'cors';
 import express, { Application, NextFunction, Request, Response } from 'express';
-import { StudentRoutes } from './app/modules/student/student.route';
-import { UserRoutes } from './app/modules/user/user.routes';
+
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import notFoundRoute from './app/middlewares/notFound';
 import router from './app/routes';
