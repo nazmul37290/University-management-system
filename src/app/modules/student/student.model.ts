@@ -89,7 +89,7 @@ const studentSchema = new Schema<Student>({
     enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
   },
   presentAddress: { type: String, required: true },
-  permanentAddres: { type: String, required: true },
+  permanentAddress: { type: String, required: true },
   guardian: guardianSchema,
   localGuardian: localGuradianSchema,
   profileImg: { type: String },
