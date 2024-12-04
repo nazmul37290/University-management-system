@@ -92,6 +92,11 @@ const studentSchema = new Schema<Student>(
     presentAddress: { type: String, required: true },
     permanentAddress: { type: String, required: true },
     guardian: guardianSchema,
+    admissionSemester: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'admission semester ID is required'],
+      ref: 'academicSemesterModel',
+    },
     localGuardian: localGuradianSchema,
     profileImg: { type: String },
   },
