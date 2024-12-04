@@ -66,33 +66,36 @@ const localGuradianSchema = new Schema<LocalGuardian>({
   },
 });
 
-const studentSchema = new Schema<Student>({
-  id: { type: String, unique: true, required: true },
-  name: userNameSchema,
-  user: {
-    type: Schema.Types.ObjectId,
-    required: [true, 'user ID is required'],
-    unique: true,
-    ref: 'userModel',
+const studentSchema = new Schema<Student>(
+  {
+    id: { type: String, unique: true, required: true },
+    name: userNameSchema,
+    user: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'user ID is required'],
+      unique: true,
+      ref: 'userModel',
+    },
+    gender: {
+      type: String,
+      enum: ['male', 'female'],
+      required: [true, 'gender is required'],
+    },
+    dateOfBirth: { type: String },
+    email: { type: String, required: true },
+    contactNo: { type: String, required: true },
+    emergencyContactNo: { type: String, required: true },
+    bloogGroup: {
+      type: String,
+      enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+    },
+    presentAddress: { type: String, required: true },
+    permanentAddress: { type: String, required: true },
+    guardian: guardianSchema,
+    localGuardian: localGuradianSchema,
+    profileImg: { type: String },
   },
-  gender: {
-    type: String,
-    enum: ['male', 'female'],
-    required: [true, 'gender is required'],
-  },
-  dateOfBirth: { type: String },
-  email: { type: String, required: true },
-  contactNo: { type: String, required: true },
-  emergencyContactNo: { type: String, required: true },
-  bloogGroup: {
-    type: String,
-    enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
-  },
-  presentAddress: { type: String, required: true },
-  permanentAddress: { type: String, required: true },
-  guardian: guardianSchema,
-  localGuardian: localGuradianSchema,
-  profileImg: { type: String },
-});
+  { timestamps: true },
+);
 
 export const StudentModel = model<Student>('Student', studentSchema);
