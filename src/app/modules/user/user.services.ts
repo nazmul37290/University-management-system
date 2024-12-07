@@ -14,8 +14,10 @@ const createStudentIntoDB = async (password: string, student: Student) => {
   const admissionSemester = await academicSemesterModel.findById(
     student.admissionSemester,
   );
-
-  userData.id = generateStudentUserId(admissionSemester);
+  if (!admissionSemester) {
+    throw new Error('Admission semester not found');
+  }
+  userData.id = await generateStudentUserId(admissionSemester);
   const newUser = await userModel.create(userData);
   if (Object.keys(newUser).length) {
     student.id = newUser.id;
