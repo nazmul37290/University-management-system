@@ -1,11 +1,11 @@
 import config from '../../config';
-import { TAcademicSemester } from '../academicSemester/academicSemester.interface';
 import academicSemesterModel from '../academicSemester/academicSemester.model';
 import { Student } from '../student/student.interface';
 import { StudentModel } from '../student/student.model';
 import { TUser } from './user.interface';
 
 import { userModel } from './user.model';
+import { generateStudentUserId } from './user.utils';
 
 const createStudentIntoDB = async (password: string, student: Student) => {
   const userData: Partial<TUser> = {};
@@ -14,13 +14,6 @@ const createStudentIntoDB = async (password: string, student: Student) => {
   const admissionSemester = await academicSemesterModel.findById(
     student.admissionSemester,
   );
-  const generateStudentUserId = (admissionSemester: TAcademicSemester) => {
-    const currentId = (0).toString();
-    let newId = Number(currentId + 1)
-      .toString()
-      .padStart(4, '0');
-    let userId = `${admissionSemester.year}`;
-  };
 
   userData.id = generateStudentUserId(admissionSemester);
   const newUser = await userModel.create(userData);
