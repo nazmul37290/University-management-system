@@ -7,13 +7,27 @@ const findLastStudentId = async () => {
     .sort({ createdAt: -1 })
     .lean();
 
-  return lastStudent?.id ? lastStudent.id.substring(6) : undefined;
+  return lastStudent?.id ? lastStudent.id : undefined;
 };
 
 export const generateStudentUserId = async (
   admissionSemester: TAcademicSemester,
 ) => {
-  const currentId = (await findLastStudentId()) || (0).toString();
+  let currentId = (0).toString();
+
+  const lastStudentId = await findLastStudentId();
+  const lastStudentSemesterCode = lastStudentId?.substring(4, 6);
+  const lastStudentSemesterYear = lastStudentId?.substring(0, 4);
+  const currentSemesterCode = admissionSemester.code;
+  const currentSemesterYear = admissionSemester.year;
+  if (
+    lastStudentId &&
+    lastStudentSemesterCode === currentSemesterCode &&
+    lastStudentSemesterYear === currentSemesterYear
+  ) {
+    currentId = lastStudentId.substring(6);
+  }
+
   const newId = (Number(currentId) + 1).toString().padStart(4, '0');
   const userId = `${admissionSemester.year}${admissionSemester.code}${newId}`;
   return userId;
