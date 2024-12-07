@@ -8,4 +8,10 @@ router.post(
   AcademicFacultyController.createAcademicFaculty,
 );
 
+router.get('/', AcademicFacultyController.getAllAcademicFaculties);
+
+router.get('/:facultyId', AcademicFacultyController.getSingleAcademicFaculty);
+
+router.patch('/:facultyId', AcademicFacultyController.updateAcademicFaculty);
+
 export const AcademicFacultyRoutes = router;
