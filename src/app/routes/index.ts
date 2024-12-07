@@ -2,6 +2,7 @@ import express from 'express';
 import { StudentRoutes } from '../modules/student/student.route';
 import { UserRoutes } from '../modules/user/user.routes';
 import { AcademicSemesterRoutes } from '../modules/academicSemester/academicSemester.routes';
+import { AcademicFacultyRoutes } from '../modules/academicFaculty/academicFaculty.routes';
 
 const router = express.Router();
 
@@ -17,6 +18,10 @@ const moduleRoutes = [
   {
     path: '/academic-semesters',
     routes: AcademicSemesterRoutes,
+  },
+  {
+    path: '/academic-faculties',
+    routes: AcademicFacultyRoutes,
   },
 ];
 
