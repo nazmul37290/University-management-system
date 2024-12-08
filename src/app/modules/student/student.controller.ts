@@ -13,14 +13,19 @@ const getAllStudents: RequestHandler = catchAsync(async (req, res, next) => {
   });
 });
 
-const getSingleStudent: RequestHandler = catchAsync(async (req, res) => {
+const getSingleStudent: RequestHandler = catchAsync(async (req, res, next) => {
   const { studentId } = req.params;
   const result = await StudentServices.getSingleStudentFromDB(studentId);
-  res.status(200).json({
-    success: true,
-    message: 'Student is retrieved succesfully',
-    data: result,
-  });
+  if (result) {
+    res.status(200).json({
+      success: true,
+      message: 'Student is retrieved succesfully',
+      data: result,
+    });
+  } else {
+    const err = new Error('Student Not Found');
+    next(err);
+  }
 });
 
 export const StudentControllers = {

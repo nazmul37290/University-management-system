@@ -95,7 +95,11 @@ const studentSchema = new Schema<Student>(
     admissionSemester: {
       type: Schema.Types.ObjectId,
       required: [true, 'admission semester ID is required'],
-      ref: 'academicSemesterModel',
+      ref: 'Academic-Semester',
+    },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicDepartment',
     },
     localGuardian: localGuradianSchema,
     profileImg: { type: String },
