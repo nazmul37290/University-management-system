@@ -1,3 +1,4 @@
+import { AppError } from '../../errors/AppError';
 import catchAsync from '../../utils/catchAsync';
 import { academicDepartmentServices } from './academicDepartment.services';
 
@@ -25,6 +26,9 @@ const getSingleAcademicDepartment = catchAsync(async (req, res) => {
   const { departmentId } = req.params;
   const result =
     await academicDepartmentServices.getSingleAcademicDepartment(departmentId);
+  if (!result) {
+    throw new AppError(404, 'Department not found');
+  }
   res.status(200).json({
     success: true,
     message: 'Academic department retrieved Successfully',

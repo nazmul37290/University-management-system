@@ -16,7 +16,9 @@ const getAllAcademicDepartments = async () => {
 };
 
 const getSingleAcademicDepartment = async (id: string) => {
-  const result = await academicDepartmentModel.findById({ _id: id });
+  const result = await academicDepartmentModel
+    .findById({ _id: id })
+    .populate('academicFaculty');
   return result;
 };
 

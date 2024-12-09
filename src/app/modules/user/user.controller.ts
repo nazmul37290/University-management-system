@@ -9,7 +9,7 @@ const createStudent = catchAsync(async (req, res, next) => {
   const result = await UserServices.createStudentIntoDB(password, studentData);
   res.status(200).json({
     success: true,
-    message: 'user created successfully',
+    message: 'Student created successfully',
     data: result,
   });
 });
