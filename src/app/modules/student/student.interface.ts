@@ -31,7 +31,7 @@ export type Student = {
   email: string;
   contactNo: string;
   emergencyContactNo: string;
-  bloogGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
+  bloodgGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
   presentAddress: string;
   permanentAddress: string;
   guardian: Guardian;
@@ -39,4 +39,5 @@ export type Student = {
   academicDepartment: Types.ObjectId;
   localGuardian: LocalGuardian;
   profileImg?: string;
+  isDeleted?: boolean;
 };

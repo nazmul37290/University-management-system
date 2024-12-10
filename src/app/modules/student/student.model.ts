@@ -85,7 +85,7 @@ const studentSchema = new Schema<Student>(
     email: { type: String, required: true, unique: true },
     contactNo: { type: String, required: true },
     emergencyContactNo: { type: String, required: true },
-    bloogGroup: {
+    bloodgGroup: {
       type: String,
       enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
     },
@@ -103,6 +103,7 @@ const studentSchema = new Schema<Student>(
     },
     localGuardian: localGuradianSchema,
     profileImg: { type: String },
+    isDeleted: { type: Boolean, default: false },
   },
   { timestamps: true },
 );
