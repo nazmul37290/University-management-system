@@ -11,6 +11,11 @@ const getAllStudentsFromDB = async (query) => {
     searchTerm = query.searchTerm;
   }
 
+  const queryObj = { ...query };
+  const excludeFields = ['searchTerm'];
+  excludeFields.forEach((el) => delete queryObj[el]);
+  console.log(queryObj);
+  console.log(query);
   const searchQuery = StudentModel.find({
     $or: searchableFields.map((field) => ({
       [field]: { $regex: searchTerm, $options: 'i' },
@@ -18,7 +23,7 @@ const getAllStudentsFromDB = async (query) => {
   });
 
   const result = await searchQuery
-    .find()
+    .find(queryObj)
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
