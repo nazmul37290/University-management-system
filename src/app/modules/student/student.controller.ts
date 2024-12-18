@@ -3,6 +3,7 @@
 import { RequestHandler } from 'express';
 import { StudentServices } from './student.service';
 import catchAsync from '../../utils/catchAsync';
+import { AppError } from '../../errors/AppError';
 
 const getAllStudents: RequestHandler = catchAsync(async (req, res, next) => {
   const result = await StudentServices.getAllStudentsFromDB(req.query);
@@ -23,8 +24,7 @@ const getSingleStudent: RequestHandler = catchAsync(async (req, res, next) => {
       data: result,
     });
   } else {
-    const err = new Error('Student Not Found');
-    next(err);
+    throw new AppError(404, 'Student not found');
   }
 });
 

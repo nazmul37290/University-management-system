@@ -7,12 +7,12 @@ import { Student } from './student.interface';
 const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   const searchableFields = ['name.firstName', 'email', 'presentAddress'];
   let searchTerm = '';
+
   if (query.searchTerm) {
     searchTerm = query.searchTerm as string;
   }
-
   const queryObj = { ...query };
-  const excludeFields = ['searchTerm'];
+  const excludeFields = ['searchTerm', 'sort'];
   excludeFields.forEach((el) => delete queryObj[el]);
 
   const searchQuery = StudentModel.find({
@@ -21,7 +21,7 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
     })),
   });
 
-  const result = await searchQuery
+  const filterQuery = searchQuery
     .find(queryObj)
     .populate('admissionSemester')
     .populate({
@@ -30,7 +30,15 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
         path: 'academicFaculty',
       },
     });
-  return result;
+
+  let sort = '-createdAt';
+
+  if (query.sort) {
+    sort = query.sort as string;
+  }
+  const sortQuery = await filterQuery.sort(sort);
+
+  return sortQuery;
 };
 
 const getSingleStudentFromDB = async (id: string) => {
