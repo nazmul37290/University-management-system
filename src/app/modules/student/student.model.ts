@@ -5,6 +5,7 @@ import {
   Student,
   UserName,
 } from './student.interface';
+import { AppError } from '../../errors/AppError';
 
 const userNameSchema = new Schema<UserName>({
   firstName: {
@@ -107,5 +108,14 @@ const studentSchema = new Schema<Student>(
   },
   { timestamps: true },
 );
+
+studentSchema.pre('save', async function (next) {
+  const email = this.email;
+  const isEmailExists = await StudentModel.findOne({ email: email });
+  if (isEmailExists) {
+    throw new AppError(409, 'Email already exists');
+  }
+  next();
+});
 
 export const StudentModel = model<Student>('Student', studentSchema);
