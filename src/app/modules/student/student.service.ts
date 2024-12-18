@@ -4,18 +4,17 @@ import { AppError } from '../../errors/AppError';
 import { userModel } from '../user/user.model';
 import { Student } from './student.interface';
 
-const getAllStudentsFromDB = async (query) => {
+const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   const searchableFields = ['name.firstName', 'email', 'presentAddress'];
   let searchTerm = '';
   if (query.searchTerm) {
-    searchTerm = query.searchTerm;
+    searchTerm = query.searchTerm as string;
   }
 
   const queryObj = { ...query };
   const excludeFields = ['searchTerm'];
   excludeFields.forEach((el) => delete queryObj[el]);
-  console.log(queryObj);
-  console.log(query);
+
   const searchQuery = StudentModel.find({
     $or: searchableFields.map((field) => ({
       [field]: { $regex: searchTerm, $options: 'i' },
