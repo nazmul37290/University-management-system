@@ -11,7 +11,6 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   if (query.searchTerm) {
     searchTerm = query.searchTerm as string;
   }
-  console.log(query);
   const queryObj = { ...query };
   const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
   excludeFields.forEach((el) => delete queryObj[el]);
@@ -100,7 +99,6 @@ const updateStudentIntoDB = async (id: string, payload: Partial<Student>) => {
       modifiedUpdatedData[`localGuardian.${key}`] = value;
     }
   }
-  console.log(modifiedUpdatedData);
   const result = await StudentModel.findOneAndUpdate(
     { id },
     modifiedUpdatedData,
