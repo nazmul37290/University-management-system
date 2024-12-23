@@ -28,3 +28,4 @@ router.patch(
 );
 
 export const AcademicSemesterRoutes = router;
+//added comment
