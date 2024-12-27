@@ -31,12 +31,29 @@ class QueryBuilder<T> {
     }
 
     sort(){
-        let sort =this.query.sort || '-createdAt';
+        let sort =this?.query?.sort || '-createdAt';
         this.modelQuery= this.modelQuery.sort(sort as string)
+        return this
+    }
+    paginate(){
+        let limit =Number(this?.query?.limit) || 10 ;
+        let page =Number(this?.query?.page) || 1 ;
+        let skip =(page -1)*limit || 0 ;
+
+        this.modelQuery= this.modelQuery.skip(skip).limit(limit)
+
+        return this
+    }
+
+    limitFields(){
+        let fields= (this.query.fields as string).split(',').join(' ') || "" ;
+        this.modelQuery=this.modelQuery.select(fields);
         return this
     }
 }
 
+
+export default QueryBuilder
 
 
 
